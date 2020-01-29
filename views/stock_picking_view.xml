@@ -1,0 +1,42 @@
+<odoo>
+	<data>
+
+        <record id="input_resi_tree_view" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+
+                <tree create="0" delete="0" editable="bottom">
+                    <field name="name" string="Delivery Order" readonly="1"/>
+                    <field name="sale_id" readonly="1"/>
+                    <field name="partner_id" readonly="1" string="Customer"/>
+                    <field name="carrier_id"/>
+                    <field name="carrier_tracking_ref"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+
+            </field>
+        </record>
+
+		<record id="input_resi_action" model="ir.actions.act_window">
+            <field name="name">Input Resi</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{}</field>
+            <field name="domain">[
+                ('location_id.usage','=','internal'),
+                ('location_dest_id.usage','=','customer'),
+            ]</field>
+        </record>
+        
+        <record id="input_resi_action_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="input_resi_tree_view"/>
+            <field name="act_window_id" ref="input_resi_action"/>
+        </record>
+
+        <menuitem id="input_resi_menu" action="input_resi_action" parent="stock.menu_stock_warehouse_mgmt" sequence="-10"/>
+        
+	</data>
+</odoo>

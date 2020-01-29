@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_order_form_payment_unique" model="ir.ui.view">
+		<field name="name">sale.order.form.payment.unique</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form" />
+		<field name="arch" type="xml">
+
+			<button name="action_quotation_send" position="after">
+				<button name="unique_set" string="Set Unique Payment Amount"
+					type="object" states="draft" />
+			</button>
+
+		</field>
+	</record>
+</odoo>
