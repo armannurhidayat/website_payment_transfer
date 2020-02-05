@@ -37,7 +37,7 @@ class WebsiteSalePayment(WebsiteSale):
 
 	@http.route(['/payment/confirmation/<int:so_id>'], type='http', auth="user", website=True)
 	def payment_confirmation(self, so_id, **post):
-		account_journal = request.env['account.journal'].search([('type', 'in', ('bank',))])
+		account_journal = request.env['account.journal'].sudo().search([('type', 'in', ('bank',))])
 		sale_order = request.env['sale.order'].sudo().search([('id', '=', so_id)])
 
 		return request.render("website_payment_transfer.payment_confirmation", {
@@ -61,7 +61,7 @@ class WebsiteSalePayment(WebsiteSale):
 			'amount'            : post.get('nominal_transfer'),
 			'payment_date'      : post.get('tgl_transfer'),
 			'journal_id'        : int(post.get('bank')),
-			'communication'     : post.get('memo'),
+			'communication'     : post.get('so_name') + ' | ' + post.get('memo'),
 			'payment_type'      : 'inbound',
 			'partner_type'      : 'customer',
 			'payment_method_id' : 2,
